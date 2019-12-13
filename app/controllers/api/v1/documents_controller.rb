@@ -1,5 +1,5 @@
 class Api::V1::DocumentsController < Api::V1::BaseController
-  before_action :set_doc, only: [:show,  :latest]
+  before_action :set_doc, only: [:show,  :latest, :update]
 
   def index
     @documents = Document.all
@@ -19,6 +19,21 @@ class Api::V1::DocumentsController < Api::V1::BaseController
     end
   end
 
+  def update
+    content = params[:content]
+    if @document
+      Revision.create(document: @document, content: @document.content, title: @document.title)
+      @document.content = content
+      if @document.save
+
+      else
+        render_error_did_not_save
+      end
+    else
+      render_error_not_found
+    end
+  end
+
   private
 
   def set_doc
@@ -30,4 +45,7 @@ class Api::V1::DocumentsController < Api::V1::BaseController
     render json: {status: "not found", code: "404" }
   end
 
+  def render_error_did_not_save
+    render json: {status: "did not save", code: "400" }
+  end
 end
