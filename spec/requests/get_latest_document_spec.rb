@@ -13,9 +13,5 @@ describe "get latest document version route", :type => :request do
     expect(JSON.parse(response.body)['title']).to eq(i.to_s)
   end
 
-  before {get "/api/v1/documents/#{rand(11..100)}/latest"}
 
-  it 'returns status code 404' do
-    expect(response).to have_http_status(:not_found)
-  end
 end
