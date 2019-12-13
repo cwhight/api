@@ -16,7 +16,7 @@ class Api::V1::DocumentsController < Api::V1::BaseController
   def update
     content = params[:content]
     if @document
-      Revision.create(document: @document, content: @document.content, title: @document.title)
+      Revision.create(document: @document, content: @document.content, title: @document.title, created_at: @document.updated_at)
       @document.content = content
       render_error_did_not_save unless @document.save
     else

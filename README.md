@@ -1,24 +1,36 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## This app is built using Ruby on rails with a PostgreSQL database
 
-Things you may want to cover:
+Ruby Version [installation guide](https://www.ruby-lang.org/en/downloads/)
 
-* Ruby version
+ruby 2.6.3p62 (2019-04-16 revision 67580) [x86_64-linux]
 
-* System dependencies
+With Ruby installed, install rails [installation guide](https://guides.rubyonrails.org/v5.0/getting_started.html)
 
-* Configuration
+``` gem install rails ```
 
-* Database creation
+To verify installation
 
-* Database initialization
+``` rails --version ```
 
-* How to run the test suite
+To initialize the database run
 
-* Services (job queues, cache servers, search engines, etc.)
+``` rails db:create db:migrate db:seed ```
 
-* Deployment instructions
+To launch the server run
 
-* ...
+``` rails s ```
+
+and go to localhost:/3000/documents
+
+To launch the test suite - using rspec
+
+Install:
+
+``` rails generate rspec:install ```
+
+Run:
+
+``` rspec ```
+
