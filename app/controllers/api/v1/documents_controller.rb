@@ -36,10 +36,18 @@ class Api::V1::DocumentsController < Api::V1::BaseController
 
   def timestamp
     timestamp = Time.parse(params[:timestamp])
-    @revisions = @document.revisions
-    @revision = @revisions.select {|r| r.created_at <= timestamp }.first
-    if @revision
-      @revision
+    if @document
+      if @document.revisions.empty?
+        @document.created_at <= timestamp ? @document : render_error_not_found
+      else
+        @revisions = @document.revisions.order(created_at: :desc)
+        @revision = @revisions.select {|revision| revision.created_at <= timestamp }.first
+        if @revision
+          @revision
+        else
+          render_error_not_found
+        end
+      end
     else
       render_error_not_found
     end
@@ -53,10 +61,18 @@ class Api::V1::DocumentsController < Api::V1::BaseController
   end
 
   def render_error_not_found
-    render json: {status: "not found", code: "404" }
+    render json: {
+      status: 404,
+      error: :not_found,
+      message: 'Document not found'
+    }, status: 404
   end
 
   def render_error_did_not_save
-    render json: {status: "did not save", code: "400" }
+    render json: {
+      status: 400,
+      error: :did_not_save,
+      message: 'Update did not save'
+    }, status: 404
   end
 end
