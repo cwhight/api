@@ -7,7 +7,7 @@ describe "post document route", :type => :request do
     post "/api/v1/documents/#{i}", params: { content: "something new" }
   end
 
-  it 'returns status code 200' do
+  it 'returns status code 2xx' do
     expect(response).to have_http_status(:success)
   end
 
@@ -18,7 +18,7 @@ describe "post document route", :type => :request do
     expect(JSON.parse(response.body)['content']).to eq("something new")
   end
 
-  it 'still returns status code 200' do
+  it 'still returns status code 2xx' do
     expect(response).to have_http_status(:success)
   end
 

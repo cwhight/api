@@ -1,5 +1,5 @@
 class Api::V1::DocumentsController < Api::V1::BaseController
-  before_action :set_doc, only: [:show,  :latest, :update]
+  before_action :set_doc, only: [:show,  :latest, :update, :timestamp]
 
   def index
     @documents = Document.all
@@ -32,6 +32,12 @@ class Api::V1::DocumentsController < Api::V1::BaseController
     else
       render_error_not_found
     end
+  end
+
+  def timestamp
+    timestamp = Time.parse(params[:timestamp])
+    @revisions = @document.revisions
+    @revision = @revisions.select {|r| r.created_at <= timestamp }.first
   end
 
   private

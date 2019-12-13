@@ -9,7 +9,7 @@ describe "get all documents route", :type => :request do
     expect(JSON.parse(response.body).size).to eq(10)
   end
 
-  it 'returns status code 200' do
+  it 'returns status code 2xx' do
     expect(response).to have_http_status(:success)
   end
 
