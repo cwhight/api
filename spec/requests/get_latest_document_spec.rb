@@ -9,7 +9,7 @@ describe "get latest document version route", :type => :request do
     expect(response).to have_http_status(:success)
   end
 
-  # it 'latest now returns the updated version of the document' do
-  #   expect(JSON.parse(response.body)['content']).to eq("something new")
-  # end
+  it 'returns the correct document' do
+    expect(JSON.parse(response.body)['title']).to eq(i.to_s)
+  end
 end

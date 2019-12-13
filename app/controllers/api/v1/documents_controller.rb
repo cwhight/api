@@ -1,5 +1,5 @@
 class Api::V1::DocumentsController < Api::V1::BaseController
-  before_action :set_doc, only: [:show,  :latest ]
+  before_action :set_doc, only: [:show,  :latest]
 
   def index
     @documents = Document.all
