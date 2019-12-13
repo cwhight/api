@@ -14,6 +14,9 @@ class Api::V1::DocumentsController < Api::V1::BaseController
   end
 
   def latest
+    unless @document
+      render_error_not_found
+    end
   end
 
   private
