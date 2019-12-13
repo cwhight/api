@@ -6,17 +6,11 @@ class Api::V1::DocumentsController < Api::V1::BaseController
   end
 
   def show
-    if @document
-      @revisions = @document.revisions.order(created_at: :desc)
-    else
-      render_error_not_found
-    end
+    @document ? @revisions = @document.revisions.order(created_at: :desc) : render_error_not_found
   end
 
   def latest
-    unless @document
-      render_error_not_found
-    end
+    render_error_not_found unless @document
   end
 
   def update
@@ -24,29 +18,23 @@ class Api::V1::DocumentsController < Api::V1::BaseController
     if @document
       Revision.create(document: @document, content: @document.content, title: @document.title)
       @document.content = content
-      if @document.save
-
-      else
-        render_error_did_not_save
-      end
+      render_error_did_not_save unless @document.save
     else
       render_error_not_found
     end
   end
 
   def timestamp
-    timestamp = Time.parse(params[:timestamp])
+    timestamp = Time.parse(params[:timestamp]) + 1
     if @document
-      if @document.revisions.empty?
+      if  @document.updated_at <= timestamp
+        @document
+      elsif @document.revisions.empty?
         @document.created_at <= timestamp ? @document : render_error_not_found
       else
         @revisions = @document.revisions.order(created_at: :desc)
         @revision = @revisions.select {|revision| revision.created_at <= timestamp }.first
-        if @revision
-          @revision
-        else
-          render_error_not_found
-        end
+        @revision ? @revision : render_error_not_found
       end
     else
       render_error_not_found

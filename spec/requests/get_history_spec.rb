@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 describe "get document history route", :type => :request do
+
   before {get "/api/v1/documents/#{rand(1..10)}"}
 
   it 'returns all the revisions for the specified document' do

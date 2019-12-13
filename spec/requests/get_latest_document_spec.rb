@@ -13,5 +13,4 @@ describe "get latest document version route", :type => :request do
     expect(JSON.parse(response.body)['title']).to eq(i.to_s)
   end
 
-
 end
