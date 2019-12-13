@@ -38,6 +38,11 @@ class Api::V1::DocumentsController < Api::V1::BaseController
     timestamp = Time.parse(params[:timestamp])
     @revisions = @document.revisions
     @revision = @revisions.select {|r| r.created_at <= timestamp }.first
+    if @revision
+      @revision
+    else
+      render_error_not_found
+    end
   end
 
   private

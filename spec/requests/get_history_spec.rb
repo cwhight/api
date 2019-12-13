@@ -11,4 +11,10 @@ describe "get all documents route", :type => :request do
   it 'returns status code 2xx' do
     expect(response).to have_http_status(:success)
   end
+
+  before {get "/api/v1/documents/#{rand(11..100)}"}
+
+  it 'returns status code 404' do
+    expect(response).to have_http_status(:not_found)
+  end
 end

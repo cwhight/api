@@ -11,6 +11,14 @@ describe "post document route", :type => :request do
     expect(response).to have_http_status(:success)
   end
 
+  before do
+    post "/api/v1/documents/#{i}", params: { content: "something new" }
+  end
+
+  it 'returns status code 404' do
+    expect(response).to have_http_status(:not_found)
+  end
+
   before {get "/api/v1/documents/#{i}/latest"}
 
 
